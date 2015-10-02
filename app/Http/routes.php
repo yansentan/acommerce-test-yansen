@@ -15,4 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/seller/index', 'SellerController@index');
+get('/seller/index', 'SellerController@index');
+get('/seller/create', 'SellerController@create');
+
+post('/seller/store', 'SellerController@store');

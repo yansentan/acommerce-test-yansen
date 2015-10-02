@@ -8,6 +8,13 @@
 	</div>
 </div>
 
+<div class="row" style="margin-bottom: 10px">
+	<div class="col-md-12">
+		<a href="{{ action('SellerController@create') }}" class="btn btn-danger btn-sm">New Seller</a>
+	</div>
+</div>
+
+
 <div class="row">
 	<div class="col-md-12">
 		<table class="table">
