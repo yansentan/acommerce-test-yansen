@@ -4,7 +4,7 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<h2>Seller <small>Create</small></h2>
+		<h2>Seller <small>Edit</small></h2>
 		<hr />
 	</div>
 </div>
@@ -25,39 +25,44 @@
 
 <div class="row">
 	<div class="col-md-6">
-		<form class="form" action="{{ action('SellerController@store') }}" method="POST">
+		<form class="form" action="{{ action('SellerController@update') }}" method="POST">
 		{!! csrf_field() !!}
 		
 		<div class="form-group">
 			<label>Name</label>
-			<input type="text" name="name" placeholder="Enter seller name" class="form-control">
+			<input type="text" name="name" value="{{ $seller->name }}" class="form-control">
 		</div>
 		
 		<div class="form-group">
 			<label>Category</label>
 			<select name="category" class="form-control">
 				@foreach ($categories as $category)
+				@if ($category->id == $seller->category_id)
+				<option value="{{ $category->id }}" selected="selected">{{ $category->name }}</option>	
+				@else
 				<option value="{{ $category->id }}">{{ $category->name }}</option>
+				@endif
 				@endforeach
 			</select>
 		</div>
 		
 		<div class="form-group">
 			<label>Address</label>
-			<input type="text" name="address" placeholder="Enter seller address" class="form-control">
+			<input type="text" name="address" value="{{ $seller->address }}" class="form-control">
 		</div>
 		
 		<div class="form-group">
 			<label>Phone</label>
-			<input type="text" name="phone" placeholder="Enter seller phone" class="form-control">
+			<input type="text" name="phone" value="{{ $seller->phone }}" class="form-control">
 		</div>
 		
 		<div class="form-group">
 			<label>Email</label>
-			<input type="text" name="email" placeholder="Enter seller email" class="form-control">
+			<input type="text" name="email" value="{{ $seller->email }}" class="form-control">
 		</div>
 		
-		<input type="submit" value="Create" class="btn btn-primary">
+		<input type="hidden" name="seller_id" value="{{ $seller->id }}" />
+		<input type="submit" value="Update" class="btn btn-primary">
 		
 		</form>
 	</div>

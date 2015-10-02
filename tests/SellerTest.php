@@ -56,7 +56,6 @@ class SellerTest extends TestCase
         $actual = App\Seller::with('category')->get();
 		
 		$this->visit('/seller/index')	
-			->see('Seller')
 			->assertViewHas('sellers', $actual);
     }
 }

@@ -63,12 +63,28 @@ class SellerController extends Controller
 
     public function edit($id)
     {
-        //
+        $seller = Seller::where('id', $id)->first();
+		$categories = Category::all();
+		
+		return view('pages.edit', ['seller' => $seller, 'categories' => $categories]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $seller = Seller::find($request->input('seller_id'));
+		
+		if ($seller->count()) {
+			$seller->name = $request->input('name', $seller->name);
+			$seller->category_id = $request->input('category_id', $seller->category_id);
+			$seller->phone = $request->input('phone', $seller->phone);
+			$seller->address = $request->input('address', $seller->address);
+			$seller->email = $request->input('email', $seller->email);
+			$seller->save();
+			
+			return redirect()->action('SellerController@index')->with('success', trans('alerts.seller.update.success'));
+		} else {
+			return App::abort(404);
+		}
     }
 
     public function destroy($id)

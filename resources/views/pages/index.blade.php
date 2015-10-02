@@ -5,6 +5,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h2>Seller <small>List</small></h2>
+		<hr />
 	</div>
 </div>
 
@@ -44,8 +45,8 @@
 				<td>{{ $seller->address }}</td>
 				<td>{{ $seller->phone }}</td>
 				<td>{{ $seller->email }}</td>
-				<td>Edit</td>
-				<td><a href="{{ action('SellerController@destroy', array('id' => $seller->id)) }}">Delete</td>
+				<td><a href="{{ action('SellerController@edit', array('id' => $seller->id)) }}">Edit</a></td>
+				<td><a href="{{ action('SellerController@destroy', array('id' => $seller->id)) }}">Delete</a></td>
 			</tr>
 			@endforeach
 			@endif
