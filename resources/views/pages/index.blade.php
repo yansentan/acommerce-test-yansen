@@ -14,6 +14,16 @@
 	</div>
 </div>
 
+@if (session('success'))
+<div class="row" style="margin-bottom: 10px">
+	<div class="col-md-12">
+		<div class="alert alert-success">
+		{{ session('success') }}
+		</div>
+	</div>
+</div>
+@endif
+
 
 <div class="row">
 	<div class="col-md-12">
@@ -35,7 +45,7 @@
 				<td>{{ $seller->phone }}</td>
 				<td>{{ $seller->email }}</td>
 				<td>Edit</td>
-				<td>Delete</td>
+				<td><a href="{{ action('SellerController@destroy', array('id' => $seller->id)) }}">Delete</td>
 			</tr>
 			@endforeach
 			@endif

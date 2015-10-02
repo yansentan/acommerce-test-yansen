@@ -7,6 +7,16 @@ use Faker\Factory as Faker;
 
 class SellerTest extends TestCase
 {
+	public function testSellerDeleteOk()
+	{
+		$seller = factory('App\Seller')->create();
+		
+		$this->visit('/seller/delete/'.$seller->id)
+			->notSeeInDatabase('sellers', [
+				'id' => $seller->id
+			]);
+			
+	}
 	
 	public function testSellerCreateOk()
 	{
@@ -45,7 +55,7 @@ class SellerTest extends TestCase
     {
         $actual = App\Seller::with('category')->get();
 		
-		$this->visit('/seller/index')
+		$this->visit('/seller/index')	
 			->see('Seller')
 			->assertViewHas('sellers', $actual);
     }

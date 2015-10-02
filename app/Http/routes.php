@@ -17,5 +17,6 @@ Route::get('/', function () {
 
 get('/seller/index', 'SellerController@index');
 get('/seller/create', 'SellerController@create');
+get('/seller/delete/{id}', 'SellerController@destroy');
 
 post('/seller/store', 'SellerController@store');

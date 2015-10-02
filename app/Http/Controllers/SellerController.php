@@ -51,7 +51,7 @@ class SellerController extends Controller
 			$seller->phone = $request->input('phone');
 			$seller->save();
 			
-			return redirect()->action('SellerController@index');
+			return redirect()->action('SellerController@index')->with('success', trans('alerts.seller.store.success'));
 		}
 		
     }
@@ -73,6 +73,9 @@ class SellerController extends Controller
 
     public function destroy($id)
     {
-        //
+        $seller = Seller::where('id', $id);
+		$seller->delete();
+		
+		return redirect()->action('SellerController@index')->with('success', trans('alerts.seller.destroy.success'));
     }
 }
