@@ -16,12 +16,9 @@ class SellerController extends Controller
     {
         $sellers = Seller::with('category')->get();
 		
-		if ($request->isJson())
-		{
+		if ($request->isJson()) {
 			return response()->json($sellers);
-		}
-		else
-		{
+		} else {
 			return view('pages.index', ['sellers' => $sellers]);
 		}
     }
@@ -67,12 +64,9 @@ class SellerController extends Controller
     {
         $seller = Seller::with('category')->where('id', $id)->first();
 		
-		if ($request->isJson())
-		{
+		if ($request->isJson()) {
 			return response()->json($seller);
-		}
-		else
-		{
+		} else {
 			return view('pages.show', ['seller' => $seller]);
 		}
     }
