@@ -40,7 +40,7 @@
 			@if ($sellers->count())
 			@foreach ($sellers as $seller)
 			<tr>	
-				<td>{{ $seller->name }}</td>
+				<td><a href="{{ action('SellerController@show', array('id' => $seller->id)) }}" target="_blank">{{ $seller->name }}</a></td>
 				<td>{{ $seller->category->name }}</td>
 				<td>{{ $seller->address }}</td>
 				<td>{{ $seller->phone }}</td>

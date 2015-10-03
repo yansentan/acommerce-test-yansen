@@ -12,11 +12,18 @@ use Validator;
 class SellerController extends Controller
 {
     
-    public function index()
+    public function index(Request $request)
     {
         $sellers = Seller::with('category')->get();
 		
-		return view('pages.index', ['sellers' => $sellers]);
+		if ($request->isJson())
+		{
+			return response()->json($sellers);
+		}
+		else
+		{
+			return view('pages.index', ['sellers' => $sellers]);
+		}
     }
 
     public function create()
@@ -56,9 +63,18 @@ class SellerController extends Controller
 		
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        $seller = Seller::with('category')->where('id', $id)->first();
+		
+		if ($request->isJson())
+		{
+			return response()->json($seller);
+		}
+		else
+		{
+			return view('pages.show', ['seller' => $seller]);
+		}
     }
 
     public function edit($id)
@@ -71,19 +87,35 @@ class SellerController extends Controller
 
     public function update(Request $request)
     {
-        $seller = Seller::find($request->input('seller_id'));
+        $rules = array(
+			'name' => 'required',
+			'category' => 'exists:categories,id',
+			'address' => 'required|min:3',
+			'email' => 'required|email',
+			'phone' => 'required'
+		);
 		
-		if ($seller->count()) {
-			$seller->name = $request->input('name', $seller->name);
-			$seller->category_id = $request->input('category_id', $seller->category_id);
-			$seller->phone = $request->input('phone', $seller->phone);
-			$seller->address = $request->input('address', $seller->address);
-			$seller->email = $request->input('email', $seller->email);
-			$seller->save();
-			
-			return redirect()->action('SellerController@index')->with('success', trans('alerts.seller.update.success'));
+		$validator = Validator::make($request->all(), $rules);
+		
+		if ($validator->fails()) {
+			return redirect()->back()->withErrors($validator);
 		} else {
-			return App::abort(404);
+		
+			$seller = Seller::find($request->input('seller_id'));
+			
+			if ($seller->count()) {
+				$seller->name = $request->input('name', $seller->name);
+				$seller->category_id = $request->input('category_id', $seller->category_id);
+				$seller->phone = $request->input('phone', $seller->phone);
+				$seller->address = $request->input('address', $seller->address);
+				$seller->email = $request->input('email', $seller->email);
+				$seller->save();
+				
+				return redirect()->action('SellerController@index')->with('success', trans('alerts.seller.update.success'));
+			} else {
+				return App::abort(404);
+			}
+		
 		}
     }
 

@@ -19,6 +19,7 @@ get('/seller/index', 'SellerController@index');
 get('/seller/create', 'SellerController@create');
 get('/seller/edit/{id}', 'SellerController@edit');
 get('/seller/delete/{id}', 'SellerController@destroy');
+get('/seller/show/{id}', 'SellerController@show');
 
 post('/seller/store', 'SellerController@store');
 post('/seller/update', 'SellerController@update');

@@ -7,6 +7,25 @@ use Faker\Factory as Faker;
 
 class SellerTest extends TestCase
 {
+	public function testShowWithJson()
+	{
+		$seller = factory('App\Seller')->create();
+		$supposed = App\Seller::with('category')->where('id', $seller->id)->first()->toArray();
+		
+		$this->get('/seller/show/'.$seller->id, array('Content-Type' => 'application/json'))
+			->seeJsonEquals($supposed);
+			
+	}
+	
+	public function testIndexWithJson()
+	{
+		$supposed = App\Seller::with('category')->get();
+		$supposed = collect($supposed)->toArray();
+		
+		$this->get('/seller/index', array('Content-Type' => 'application/json'))
+			->seeJsonEquals($supposed);
+	}
+	
 	public function testSellerDeleteOk()
 	{
 		$seller = factory('App\Seller')->create();
