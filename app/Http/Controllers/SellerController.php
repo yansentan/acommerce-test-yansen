@@ -62,7 +62,7 @@ class SellerController extends Controller
 
     public function show(Request $request, $id)
     {
-        $seller = Seller::with('category')->where('id', $id)->first();
+        $seller = Seller::with('category')->where('id', $id)->firstOrFail();
 		
 		if ($request->isJson()) {
 			return response()->json($seller);
